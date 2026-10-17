@@ -26,6 +26,14 @@ jobs:
         run: |
           pip3 install --user --upgrade buildozer cython virtualenv
 
+      - name: Accept All Android Licenses (Important)
+        run: |
+          export PATH=$PATH:~/.local/bin
+          # എല്ലാ ലൈസൻസുകളും ഓട്ടോമാറ്റിക് ആയി എക്സെപ്റ്റ് ചെയ്യുന്നു
+          mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
+          echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+          yes | ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses || true
+
       - name: Build with Buildozer
         run: |
           export PATH=$PATH:~/.local/bin
