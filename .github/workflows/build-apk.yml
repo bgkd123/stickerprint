@@ -26,10 +26,17 @@ jobs:
         run: |
           pip3 install --user --upgrade buildozer cython virtualenv
 
+      - name: Fix Android SDK Download (403 Error Bypass)
+        run: |
+          # Replaces old Google URLs causing 403 Forbidden error
+          find ~/.local/lib/python*/site-packages/buildozer -type f -exec sed -i 's|http://dl-ssl.google.com|https://dl.google.com|g' {} \;
+          find ~/.local/lib/python*/site-packages/buildozer -type f -exec sed -i 's|https://dl-ssl.google.com|https://dl.google.com|g' {} \;
+
       - name: Build with Buildozer
         run: |
           export PATH=$PATH:~/.local/bin
           export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
+          export ANDROID_ACCEPT_LICENSE=1
           buildozer -v android debug
 
       - name: Upload APK
