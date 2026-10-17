@@ -9,8 +9,8 @@ source.include_patterns = assets/*,images/*
 
 version = 1.0
 
-# 'android' removed to fix 403 error
-requirements = python3,kivy==2.3.0,pillow,reportlab,plyer,pyjnius
+# reportlab temporarily removed to fix build errors
+requirements = python3,kivy==2.3.0,pillow,plyer,pyjnius
 
 orientation = portrait
 fullscreen = 0
