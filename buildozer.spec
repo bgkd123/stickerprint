@@ -9,7 +9,8 @@ source.include_patterns = assets/*,images/*
 
 version = 1.0
 
-requirements = python3,kivy==2.3.0,pillow,reportlab,plyer,android,pyjnius
+# 'android' removed to fix 403 error
+requirements = python3,kivy==2.3.0,pillow,reportlab,plyer,pyjnius
 
 orientation = portrait
 fullscreen = 0
@@ -22,9 +23,10 @@ android.accept_sdk_license = True
 
 android.permissions = READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, READ_MEDIA_IMAGES
 
-android.archs = arm64-v8a, armeabi-v7a
+android.archs = arm64-v8a
 android.allow_backup = True
 
-p4a.branch = master
+# Changed to develop to fix download issues
+p4a.branch = develop
 
 android.logcat_filters = *:S python:D
