@@ -26,10 +26,12 @@ jobs:
         run: |
           pip3 install --user --upgrade buildozer cython virtualenv
 
-      - name: Fix Android SDK Download URL
+      - name: Fix Android SDK Download & Bypass 403
         run: |
-          find ~/.local/lib/python*/site-packages/buildozer -type f -exec sed -i 's|http://dl-ssl.google.com|https://dl.google.com|g' {} \;
-          find ~/.local/lib/python*/site-packages/buildozer -type f -exec sed -i 's|https://dl-ssl.google.com|https://dl.google.com|g' {} \;
+          # പഴയ ലിങ്കുകൾ എല്ലാം പുതിയതിലേക്ക് മാറ്റുന്നു
+          find ~/.local/lib/python*/site-packages -type f -exec sed -i 's|http://dl-ssl.google.com|https://dl.google.com|g' {} \;
+          find ~/.local/lib/python*/site-packages -type f -exec sed -i 's|https://dl-ssl.google.com|https://dl.google.com|g' {} \;
+          find ~/.local/lib/python*/site-packages -type f -exec sed -i 's|http://dl.google.com|https://dl.google.com|g' {} \;
 
       - name: Build with Buildozer
         run: |
