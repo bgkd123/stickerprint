@@ -7,28 +7,29 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
+      - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+
+      - name: Install Buildozer
+        run: |
           pip3 install --user --upgrade buildozer cython virtualenv
 
       - name: Build with Buildozer
         run: |
           export PATH=$PATH:~/.local/bin
-          # Force the system to use the latest SDK/NDK links
-          sed -i 's|http://dl-ssl.google.com|https://dl.google.com|g' ~/.local/lib/python3.10/site-packages/buildozer/targets/android.py
-          sed -i 's|https://dl-ssl.google.com|https://dl.google.com|g' ~/.local/lib/python3.10/site-packages/buildozer/targets/android.py
+          export ANDROID_ACCEPT_LICENSE=1
           buildozer -v android debug
 
       - name: Upload APK
