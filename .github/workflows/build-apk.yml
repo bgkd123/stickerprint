@@ -26,17 +26,19 @@ jobs:
         run: |
           pip3 install --user --upgrade buildozer cython virtualenv
 
-      - name: Fix Android SDK Download & Bypass 403
+      - name: Set Android SDK/NDK Paths (Bypass 403)
         run: |
-          # പഴയ ലിങ്കുകൾ എല്ലാം പുതിയതിലേക്ക് മാറ്റുന്നു
-          find ~/.local/lib/python*/site-packages -type f -exec sed -i 's|http://dl-ssl.google.com|https://dl.google.com|g' {} \;
-          find ~/.local/lib/python*/site-packages -type f -exec sed -i 's|https://dl-ssl.google.com|https://dl.google.com|g' {} \;
-          find ~/.local/lib/python*/site-packages -type f -exec sed -i 's|http://dl.google.com|https://dl.google.com|g' {} \;
+          # Force Buildozer to use the pre-installed GitHub Android SDK
+          export ANDROIDSDK="/usr/local/lib/android/sdk"
+          export ANDROIDNDK="/usr/local/lib/android/sdk/ndk/25.2.9519653"
+          echo "ANDROIDSDK=$ANDROIDSDK" >> $GITHUB_ENV
+          echo "ANDROIDNDK=$ANDROIDNDK" >> $GITHUB_ENV
+          echo "ANDROIDAPI=33" >> $GITHUB_ENV
+          echo "ANDROIDMINAPI=21" >> $GITHUB_ENV
 
       - name: Build with Buildozer
         run: |
           export PATH=$PATH:~/.local/bin
-          export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
           export ANDROID_ACCEPT_LICENSE=1
           buildozer -v android debug
 
