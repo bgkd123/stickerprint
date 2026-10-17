@@ -26,7 +26,7 @@ android.permissions = READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, READ_MEDIA_
 android.archs = arm64-v8a
 android.allow_backup = True
 
-# Changed to develop to fix download issues
-p4a.branch = develop
+# Fixed branch
+p4a.branch = master
 
 android.logcat_filters = *:S python:D
